@@ -12,7 +12,7 @@ export const Ticket = () => {
   const actions = [
     { label: 'Request Holiday / leave', value: 'request_holiday__leave' },
     { label: 'Report sick leave', value: 'report_sick_leave' },
-    { label: 'Report return date after sick leave', value: 'report_return_after_sick_leave' }
+    { label: 'Report return date after sick leave', value: 'report_start_work' }
   ];
   const [startHolidayDay, setStartHolidayDay] = useState(new Date().toISOString().slice(0, 10));
   const [endHolidayDay, setEndHolidayDay] = useState(new Date().toISOString().slice(0, 10));
@@ -32,18 +32,17 @@ export const Ticket = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     setEmailValid(isEmailValid(data.email));
 
-    if (emailValid) {
-      if(data.action === 'request_holiday__leave') {
-        const ticket = requestHoliday(data)
+    if (isEmailValid(data.email)) {
+        const ticket = requestHoliday(data);
+        console.log(ticket);
 
         // const resp = await axios.post('https://test-integrator.formsengine.io/trainman/uWg85Wt7u1F1iRYY/supportform/submit_support_form_piper', 
         //   ticket
         // );
         // console.log(resp);
-      }
+
     }
 
 
@@ -226,7 +225,7 @@ export const Ticket = () => {
         </View>
       }
 
-      {selectedAction === 'report_return_after_sick_leave' &&
+      {selectedAction === 'report_start_work' &&
         <View style={styles.block}>
           <Text style={styles.label}>Start date:</Text>
           <TouchableOpacity
@@ -367,7 +366,7 @@ const styles = StyleSheet.create({
 //   const actions = [
 //     { label: 'Request Holiday / leave', value: 'request_holiday__leave' },
 //     { label: 'Report sick leave', value: 'report_sick_leave' },
-//     { label: 'Report return date after sick leave', value: 'report_return_after_sick_leave' }
+//     { label: 'Report return date after sick leave', value: 'report_start_work' }
 //   ];
 //   const [startHolidayDay, setStartHolidayDay] = useState(new Date().toISOString().slice(0, 10));
 //   const [endHolidayDay, setEndHolidayDay] = useState(new Date().toISOString().slice(0, 10));
@@ -581,7 +580,7 @@ const styles = StyleSheet.create({
 //         </View>
 //       }
 
-//       {selectedAction === 'report_return_after_sick_leave' &&
+//       {selectedAction === 'report_start_work' &&
 //         <View style={styles.block}>
 //           <Text style={styles.label}>Start date:</Text>
 //           <TouchableOpacity
@@ -735,7 +734,7 @@ const styles = StyleSheet.create({
 //   const actions = [
 //     { label: 'Request Holiday / leave', value: 'request_holiday__leave' },
 //     { label: 'Report sick leave', value: 'report_sick_leave' },
-//     { label: 'Report return date after sick leave', value: 'report_return_after_sick_leave' }
+//     { label: 'Report return date after sick leave', value: 'report_start_work' }
 //   ];
 //   const [startHolidayDay, setStartHolidayDay] = useState(new Date().toISOString().slice(0, 10));
 //   const [endHolidayDay, setEndHolidayDay] = useState(new Date().toISOString().slice(0, 10));
@@ -948,7 +947,7 @@ const styles = StyleSheet.create({
 //         </View>
 //       }
 
-//       {selectedAction === 'report_return_after_sick_leave' &&
+//       {selectedAction === 'report_start_work' &&
 //         <View style={styles.block}>
 //           <Text style={styles.label}>Start date:</Text>
 //           <TouchableOpacity
@@ -1087,7 +1086,7 @@ const styles = StyleSheet.create({
 //   const actions = [
 //     { label: 'Request Holiday / leave', value: 'request_holiday__leave' },
 //     { label: 'Report sick leave', value: 'report_sick_leave' },
-//     { label: 'Report return date after sick leave', value: 'report_return_after_sick_leave' }
+//     { label: 'Report return date after sick leave', value: 'report_start_work' }
 //   ];
 //   const [startHolidayDay, setStartHolidayDay] = useState(new Date().toISOString().slice(0, 10));
 //   const [endHolidayDay, setEndHolidayDay] = useState(new Date().toISOString().slice(0, 10));
@@ -1281,7 +1280,7 @@ const styles = StyleSheet.create({
 //         </View>
 //       }
 
-//       {selectedAction === 'report_return_after_sick_leave' &&
+//       {selectedAction === 'report_start_work' &&
 //         <View style={styles.block}>
 //           <Text>Start date:</Text>
 //           <Button title={startHolidayDay} onPress={() => setStartDatePickerVisibility(true)} />
@@ -1355,7 +1354,7 @@ const styles = StyleSheet.create({
 //   const actions = [
 //     { label: 'Request Holiday / leave', value: 'request_holiday__leave' },
 //     { label: 'Report sick leave', value: 'report_sick_leave' },
-//     { label: 'Report return date after sick leave', value: 'report_return_after_sick_leave' }
+//     { label: 'Report return date after sick leave', value: 'report_start_work' }
 //   ];
 //   const [selectedAction, setSelectedAction] = useState(actions[0].value);
 //   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -1443,7 +1442,7 @@ const styles = StyleSheet.create({
 //         <Text>Report sick leave</Text>
 //       }
 
-//       {selectedAction === 'report_return_after_sick_leave' &&
+//       {selectedAction === 'report_start_work' &&
 //         <Text>Report return date after sick leave</Text>
 //       }
 

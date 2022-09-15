@@ -35,12 +35,30 @@ export const requestHoliday = (data) => {
       descriptionContent: {
         data: {
           answer: [
-            `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>`
-          ],
+
+            (data.action === 'request_holiday__leave' &&
+            `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>`),
+
+            (data.action === 'report_sick_leave' &&
+            `<div style='display: block;'>First sick day: ${data.startHolidayDay}</div>`),
+
+            (data.action === 'report_start_work' &&
+            `<div style='display: block;'>Start date: ${data.startHolidayDay}</div>`),
+
+          ].filter(Boolean),
           label: "Description Content",
           answerLabel: [
-            `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>`
-          ],
+
+            (data.action === 'request_holiday__leave' &&
+            `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>`),
+
+            (data.action === 'report_sick_leave' &&
+            `<div style='display: block;'>First sick day: ${data.startHolidayDay}</div>`),
+
+            (data.action === 'report_start_work' &&
+            `<div style='display: block;'>Start date: ${data.startHolidayDay}</div>`),
+
+          ].filter(Boolean),
           tags: ""
         },
         position: 10
@@ -123,7 +141,9 @@ export const requestHoliday = (data) => {
         },
         position: 14
       },
-      request_holiday: {
+
+      ...(data.action === 'request_holiday__leave') &&
+      {request_holiday: {
         data: {
           answer: [
             `Start date:${data.startHolidayDay}\nEnd date:${data.endHolidayDay}\nName project manager who approved: ${data.whoApproved}`
@@ -135,7 +155,38 @@ export const requestHoliday = (data) => {
           tags: ""
         },
         position: 4
-      },
+      }},
+
+      ...(data.action === 'report_sick_leave') &&
+      {report_sick_leave: {
+        data: {
+          answer: [
+            `First sick day: ${data.startHolidayDay}`
+          ],
+          label: "Report sick leave",
+          answerLabel: [
+            `First sick day: ${data.startHolidayDay}`
+          ],
+          tags: ""
+        },
+        position: 4
+      }},
+
+      ...(data.action === 'report_start_work') &&
+      {report_start_work: {
+        data: {
+          answer: [
+            `Start date: ${data.startHolidayDay}`
+          ],
+          label: "Report return date after sick leave",
+          answerLabel: [
+            `Start date: ${data.startHolidayDay}`
+          ],
+          tags: ""
+        },
+        position: 4
+      }},
+
       attachment: {
         data: {
           answer: [
@@ -165,12 +216,26 @@ export const requestHoliday = (data) => {
       action: {
         data: {
           answer: [
-            "request_holiday__leave"
-          ],
+
+            (data.action === 'request_holiday__leave' &&
+            "request_holiday__leave"),
+            (data.action === 'report_sick_leave' &&
+            "report_sick_leave"),
+            (data.action === 'report_start_work' &&
+            "report_start_work"),
+
+          ].filter(Boolean),
           label: "Action",
           answerLabel: [
-            "Request Holiday / leave"
-          ],
+
+            (data.action === 'request_holiday__leave' &&
+            "Request Holiday / leave"),
+            (data.action === 'report_sick_leave' &&
+            "Report sick leave"),
+            (data.action === 'report_start_work' &&
+            "Report return date after sick leave"),
+
+          ].filter(Boolean),
           tags: ""
         },
         position: 3
