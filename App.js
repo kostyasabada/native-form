@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, View, Image, ActivityIndicator } from 'react-native';
+import axios from 'axios';
 import { ConfirmPage } from './src/ConfirmPage';
 import { requestHoliday } from './src/helpers/ticket';
-import axios from 'axios';
+import { Api } from './src/constants/urls';
 
 import { Ticket } from './src/Ticket';
 
@@ -13,6 +14,7 @@ export default function App() {
   const [submitError, setSubmitError] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(false);
+  const [csrfToken, setCsrfToken] = useState(null);
   const [formValues, setFormValues] = useState({
     email: '',
     action: 'request_holiday__leave',
@@ -21,6 +23,27 @@ export default function App() {
     whoApproved: ''
   });
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post(`${Api.PUBLISHER}/read`, 
+        {
+          "questionnaireId":"ZPtqdHAy",
+          "processId":"",
+          "requestType":"",
+          "initPrefillData":{},
+          "processParams":{},
+          "siteUrl":"https://portal.mycubes.nl/"
+        }
+        );
+
+        setCsrfToken(response.data.structure.csrfToken)
+      } catch (error) {
+        console.log(error);
+      }
+
+    })();
+  }, [])
   const onNext = async (data) => {
     setConfirmData(data);
     setFormValues({
@@ -36,12 +59,13 @@ export default function App() {
     setDisableSubmit(true);
     setSubmitError(false);
 
-    const ticket = requestHoliday(data);
+    const ticket = requestHoliday(data, csrfToken);
+    console.log(ticket);
 
     try {
-      const resp = await axios.post('https://test-integrator.formsengine.io/trainman/uWg85Wt7u1F1iRYY/supportform/submit_support_form_piper', 
-        ticket
-      );
+      // const resp = await axios.post(`${Api.PUBLISHER}/validate`, 
+      //   ticket
+      // );
       setDisableSubmit(false);
 
       if (resp.data.status === 'true') {
@@ -56,6 +80,13 @@ export default function App() {
 
   }
 
+  if (!csrfToken) {
+    return (
+      <View style={[styles.body, styles.loader]}>
+        <ActivityIndicator color={"#000"} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.body}>
@@ -101,5 +132,10 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     width: 220,
     height: 80
+  },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

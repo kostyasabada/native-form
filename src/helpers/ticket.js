@@ -1,290 +1,286 @@
-export const requestHoliday = (data) => {
+export const requestHoliday = (data, csrfToken) => {
 
   const ticket = {
-    emailAddress: "",
-    secureData: null,
-    emailBody: "",
-    name: "submit_support_form_piper",
-    answers: {
-      summary: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "Summary",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 13
-      },
-      agent: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "Agent",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 9
-      },
-      descriptionContent: {
-        data: {
-          answer: [
-
-            (data.action === 'request_holiday__leave' &&
-            `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>`),
-
-            (data.action === 'report_sick_leave' &&
-            `<div style='display: block;'>First sick day: ${data.startHolidayDay}</div>`),
-
-            (data.action === 'report_start_work' &&
-            `<div style='display: block;'>Start date: ${data.startHolidayDay}</div>`),
-
-          ].filter(Boolean),
-          label: "Description Content",
-          answerLabel: [
-
-            (data.action === 'request_holiday__leave' &&
-            `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>`),
-
-            (data.action === 'report_sick_leave' &&
-            `<div style='display: block;'>First sick day: ${data.startHolidayDay}</div>`),
-
-            (data.action === 'report_start_work' &&
-            `<div style='display: block;'>Start date: ${data.startHolidayDay}</div>`),
-
-          ].filter(Boolean),
-          tags: ""
-        },
-        position: 10
-      },
-      freshdesk_submit_attachment: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 15
-      },
-      source: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "Source",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 8
-      },
-      type: {
-        data: {
-          answer: [
-            "hr"
-          ],
-          label: "Type",
-          answerLabel: [
-            "HR"
-          ],
-          tags: ""
-        },
-        position: 1
-      },
-      priority: {
-        data: {
-          answer: [
-            "medium"
-          ],
-          label: "Priority",
-          answerLabel: [
-            "Medium"
-          ],
-          tags: ""
-        },
-        position: 6
-      },
-      contact_email: {
-        data: {
-          answer: [
-            `${data.email}`
-          ],
-          label: "Contact email",
-          answerLabel: [
-            `${data.email}`
-          ],
-          tags: ""
-        },
-        position: 0
-      },
-      form_info_to_description_field: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 14
-      },
-
-      ...(data.action === 'request_holiday__leave') &&
-      {request_holiday: {
-        data: {
-          answer: [
-            `Start date:${data.startHolidayDay}\nEnd date:${data.endHolidayDay}\nName project manager who approved: ${data.whoApproved}`
-          ],
-          label: "Request Holiday / leave",
-          answerLabel: [
-            `Start date:${data.startHolidayDay}\nEnd date:${data.endHolidayDay}\nName project manager who approved: ${data.whoApproved}`
-          ],
-          tags: ""
-        },
-        position: 4
-      }},
-
-      ...(data.action === 'report_sick_leave') &&
-      {report_sick_leave: {
-        data: {
-          answer: [
-            `First sick day: ${data.startHolidayDay}`
-          ],
-          label: "Report sick leave",
-          answerLabel: [
-            `First sick day: ${data.startHolidayDay}`
-          ],
-          tags: ""
-        },
-        position: 4
-      }},
-
-      ...(data.action === 'report_start_work') &&
-      {report_start_work: {
-        data: {
-          answer: [
-            `Start date: ${data.startHolidayDay}`
-          ],
-          label: "Report return date after sick leave",
-          answerLabel: [
-            `Start date: ${data.startHolidayDay}`
-          ],
-          tags: ""
-        },
-        position: 4
-      }},
-
-      attachment: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "Attachment",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 11
-      },
-      summary_page_fix: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 12
-      },
-      action: {
-        data: {
-          answer: [
-
-            (data.action === 'request_holiday__leave' &&
-            "request_holiday__leave"),
-            (data.action === 'report_sick_leave' &&
-            "report_sick_leave"),
-            (data.action === 'report_start_work' &&
-            "report_start_work"),
-
-          ].filter(Boolean),
-          label: "Action",
-          answerLabel: [
-
-            (data.action === 'request_holiday__leave' &&
-            "Request Holiday / leave"),
-            (data.action === 'report_sick_leave' &&
-            "Report sick leave"),
-            (data.action === 'report_start_work' &&
-            "Report return date after sick leave"),
-
-          ].filter(Boolean),
-          tags: ""
-        },
-        position: 3
-      },
-      asset: {
-        data: {
-          answer: [
-            "employee"
-          ],
-          label: "Asset",
-          answerLabel: [
-            "employee"
-          ],
-          tags: ""
-        },
-        position: 2
-      },
-      status: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "Status",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 5
-      },
-      group: {
-        data: {
-          answer: [
-            ""
-          ],
-          label: "Group",
-          answerLabel: [
-            ""
-          ],
-          tags: ""
-        },
-        position: 7
-      }
-    },
-    packageId: "",
-    files: {},
+    questionnaireId: "ZPtqdHAy",
     locale: "EN",
-    formVariables: {}
-  };
+    submit: true,
+    csrfToken: csrfToken,
+    pageId: 313625,
+    emailAddress: "",
+    emailBody: "",
+    answers: [
+      {
+        id: 2,
+        ctxId: "_2",
+        name: "contact_email",
+        label: "Contact email",
+        answer: data.email,
+        answerLabel: data.email,
+        publicId: 313193,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 3,
+        ctxId: "_3",
+        name: "type",
+        label: "Type",
+        answer: "hr",
+        answerLabel: "HR",
+        publicId: 313194,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 367,
+        ctxId: "_367",
+        name: "asset",
+        label: "Asset",
+        answer: "employee",
+        answerLabel: "employee",
+        publicId: 313558,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 370,
+        ctxId: "_370",
+        name: "action",
+        label: "Action",
+        answer:
+                  (data.action === 'request_holiday__leave') ?
+                  "request_holiday__leave" :
+                  (data.action === 'report_sick_leave') ?
+                  "report_sick_leave" :
+                  "report_start_work",
+        answerLabel:
+                      (data.action === 'request_holiday__leave') ?
+                      "Request Holiday / leave" :
+                      (data.action === 'report_sick_leave') ?
+                      "Report sick leave" :
+                      "Report return date after sick leave",
+        publicId: 313561,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+
+      (data.action === 'request_holiday__leave') &&
+      {
+        id: 372,
+        ctxId: "_372",
+        name: "request_holiday",
+        label: "Request Holiday / leave",
+        answer: `Start date: ${data.startHolidayDay}\nEnd date: ${data.endHolidayDay}\nName project manager who approved: ${data.whoApproved}`,
+        answerLabel: `Start date: ${data.startHolidayDay}\nEnd date: ${data.endHolidayDay}\nName project manager who approved: ${data.whoApproved}`,
+        publicId: 313563,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+
+      (data.action === 'report_sick_leave') &&
+      {
+        id: 374,
+        ctxId: "_374",
+        name: "report_sick_leave",
+        label: "Report sick leave",
+        answer: `First sick day: ${data.startHolidayDay}`,
+        answerLabel: `First sick day: ${data.startHolidayDay}`,
+        publicId: 313565,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+
+      (data.action === 'report_start_work') &&
+      {
+        id: 376,
+        ctxId: "_376",
+        name: "report_start_work",
+        label: "Report return date after sick leave",
+        answer: `Start date: ${data.startHolidayDay}`,
+        answerLabel: `Start date: ${data.startHolidayDay}`,
+        publicId: 313567,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+
+      {
+        id: 422,
+        ctxId: "_422",
+        name: "status",
+        label: "Status",
+        answer: "",
+        answerLabel: "",
+        publicId: 313613,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 423,
+        ctxId: "_423",
+        name: "priority",
+        label: "Priority",
+        answer: "low",
+        answerLabel: "Low",
+        publicId: 313614,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 428,
+        ctxId: "_428",
+        name: "group",
+        label: "Group",
+        answer: "",
+        answerLabel: "",
+        publicId: 313619,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 429,
+        ctxId: "_429",
+        name: "source",
+        label: "Source",
+        answer: "",
+        answerLabel: "",
+        publicId: 313620,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 430,
+        ctxId: "_430",
+        name: "agent",
+        label: "Agent",
+        answer: "",
+        answerLabel: "",
+        publicId: 313621,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 431,
+        ctxId: "_431",
+        name: "descriptionContent",
+        label: "Description Content",
+        answer:
+              (data.action === 'request_holiday__leave') ?
+             `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>` :
+             (data.action === 'report_sick_leave') ?
+             `<div style='display: block;'>First sick day: ${data.startHolidayDay}</div>` :
+             `<div style='display: block;'>Start date: ${data.startHolidayDay}</div>`,
+        answerLabel:
+                    (data.action === 'request_holiday__leave') ?
+                    `<div style='display: block;'>Start date:${data.startHolidayDay}</div><div style='display: block;'>End date:${data.endHolidayDay}</div><div style='display: block;'>Name project manager who approved: ${data.whoApproved}</div>` :
+                    (data.action === 'report_sick_leave') ?
+                    `<div style='display: block;'>First sick day: ${data.startHolidayDay}</div>` :
+                    `<div style='display: block;'>Start date: ${data.startHolidayDay}</div>`,
+        publicId: 313622,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 432,
+        ctxId: "_432",
+        name: "attachment",
+        label: "Attachment",
+        answer: [
+          " "
+        ],
+        answerLabel: [
+          " "
+        ],
+        publicId: 313623,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 433,
+        ctxId: "_433",
+        name: "summary_page_fix",
+        label: null,
+        answer: "",
+        answerLabel: "",
+        publicId: 313624,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 435,
+        ctxId: "_435",
+        name: "summary",
+        label: "Summary",
+        answer: "",
+        answerLabel: "",
+        publicId: 313626,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 437,
+        ctxId: "_437",
+        name: "form_info_to_description_field",
+        label: null,
+        answer: "",
+        answerLabel: "",
+        publicId: 313628,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      },
+      {
+        id: 438,
+        ctxId: "_438",
+        name: "freshdesk_submit_attachment",
+        label: null,
+        answer: "",
+        answerLabel: "",
+        publicId: 313629,
+        tags: "",
+        fileSize: 0,
+        fileType: "",
+        iter: 0
+      }
+    ].filter(Boolean),
+    formVariables: {},
+    files: null,
+    signature: null,
+    secureData: null,
+    containerId: "container"
+  }
 
   return ticket;
 }
